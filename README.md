@@ -1,7 +1,6 @@
 # homebridge-pawport
-
-[![npm](https://img.shields.io/npm/v/homebridge-pawport)](https://www.npmjs.com/package/homebridge-pawport)
-[![npm](https://img.shields.io/npm/dt/homebridge-pawport)](https://www.npmjs.com/package/homebridge-pawport)
+[![npm](https://img.shields.io/npm/v/%40oblongmedulla/homebridge-pawport)](https://www.npmjs.com/package/@oblongmedulla/homebridge-pawport)
+[![npm](https://img.shields.io/npm/dt/%40oblongmedulla/homebridge-pawport)](https://www.npmjs.com/package/@oblongmedulla/homebridge-pawport)
 
 A Homebridge plugin that exposes your Pawport smart pet door as a **Lock** in Apple Home. Lock and unlock your pet door from the Home app, Siri, or automations.
 
