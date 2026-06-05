@@ -1,0 +1,67 @@
+{
+  "pluginAlias": "PawportPlatform",
+  "pluginType": "platform",
+  "singular": false,
+  "headerDisplay": "Control your Pawport smart pet door(s) from Apple Home. [Get your auth token and door ID →](https://github.com/oblongmedulla/homebridge-pawport#finding-your-credentials)",
+  "footerDisplay": "For help, visit the [GitHub repo](https://github.com/oblongmedulla/homebridge-pawport).",
+  "schema": {
+    "type": "object",
+    "properties": {
+      "name": {
+        "title": "Platform Name",
+        "type": "string",
+        "default": "Pawport"
+      },
+      "doors": {
+        "title": "Doors",
+        "type": "array",
+        "minItems": 1,
+        "items": {
+          "title": "Door",
+          "type": "object",
+          "properties": {
+            "name": {
+              "title": "Door Name",
+              "type": "string",
+              "placeholder": "e.g. Back Door, Dog Door"
+            },
+            "authToken": {
+              "title": "Auth Token (x-auth-token)",
+              "type": "string",
+              "placeholder": "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx",
+              "description": "Your Pawport account auth token. See README for how to find this."
+            },
+            "doorID": {
+              "title": "Door ID",
+              "type": "string",
+              "placeholder": "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx",
+              "description": "The UUID of your Pawport door. See README for how to find this."
+            }
+          },
+          "required": [
+            "name",
+            "authToken",
+            "doorID"
+          ]
+        }
+      }
+    },
+    "required": [
+      "name",
+      "doors"
+    ]
+  },
+  "layout": [
+    {
+      "key": "doors",
+      "type": "array",
+      "title": "Doors",
+      "buttonText": "Add Door",
+      "items": [
+        "doors[].name",
+        "doors[].authToken",
+        "doors[].doorID"
+      ]
+    }
+  ]
+}
