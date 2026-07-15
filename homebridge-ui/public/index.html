@@ -1,38 +1,48 @@
 <div id="pawport-setup" class="p-3 text-center">
   <h5>Pawport Credential Helper</h5>
-  <p class="text-muted">Click below to log in and automatically find your Door ID.</p>
+  <p class="text-muted">Enter your Pawport login to automatically find your Door ID.</p>
+
+  <input type="email" id="pawport-email" class="form-control mb-2" placeholder="Pawport Email" style="max-width: 300px; margin: 0 auto 10px auto;">
+  <input type="password" id="pawport-password" class="form-control mb-2" placeholder="Pawport Password" style="max-width: 300px; margin: 0 auto 10px auto;">
+
   <button id="login-btn" class="btn btn-primary">Login to Pawport</button>
+
+  <div id="pawport-result" style="margin-top: 15px; text-align: left; max-width: 400px; margin-left: auto; margin-right: auto;"></div>
 </div>
 
 <script>
-  (async () => {
-    const homebridge = window.homebridge;
-    const loginBtn = document.getElementById('login-btn');
+(async () => {
+  const homebridge = window.homebridge;
+  const loginBtn = document.getElementById('login-btn');
 
-    loginBtn.onclick = async () => {
-      // 1. Show a modal to get email/password
-      const email = await homebridge.prompt('Enter Pawport Email');
-      const password = await homebridge.prompt('Enter Pawport Password');
+  loginBtn.onclick = async () => {
+    const email = document.getElementById('pawport-email').value;
+    const password = document.getElementById('pawport-password').value;
 
-      if (!email || !password) return;
+    if (!email || !password) {
+      homebridge.toast.error('Please enter both email and password', 'Missing Info');
+      return;
+    }
 
-      homebridge.showSpinner();
-      try {
-        // 2. Call the server-side script (Step 3 below) to do the login
-        const response = await homebridge.request('/get-creds', { email, password });
-        
-        homebridge.hideSpinner();
-        
-        // 3. Show the result to the user
-        homebridge.toast.success('Found your Door ID!', 'Success');
-        homebridge.showAlert(
-          `Token: ${response.token}\nDoor ID: ${response.doors[0].id}`,
-          'Copy these into the form below'
-        );
-      } catch (err) {
-        homebridge.hideSpinner();
-        homebridge.toast.error(err.message, 'Login Failed');
-      }
-    };
-  })();
+    homebridge.showSpinner();
+
+    try {
+      const response = await homebridge.request('/get-creds', { email, password });
+      homebridge.hideSpinner();
+
+      homebridge.toast.success('Found your Door ID!', 'Success');
+
+      const resultDiv = document.getElementById('pawport-result');
+      resultDiv.innerHTML = `
+        <strong>Auth Token:</strong><br>
+        <code style="word-break: break-all;">${response.token}</code><br><br>
+        <strong>Doors:</strong><br>
+        ${response.doors.map(d => `${d.name}: <code>${d.id}</code>`).join('<br>')}
+      `;
+    } catch (err) {
+      homebridge.hideSpinner();
+      homebridge.toast.error(err.message, 'Login Failed');
+    }
+  };
+})();
 </script>
