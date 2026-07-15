@@ -2,7 +2,6 @@
   "pluginAlias": "PawportPlatform",
   "pluginType": "platform",
   "singular": false,
-  "customUi": true,
   "headerDisplay": "Control your Pawport smart pet door(s) from Apple Home. [Get your auth token and door ID →](https://github.com/oblongmedulla/homebridge-pawport#finding-your-credentials)",
   "footerDisplay": "For help, visit the [GitHub repo](https://github.com/oblongmedulla/homebridge-pawport).",
   "schema": {
